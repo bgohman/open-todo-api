@@ -1,0 +1,22 @@
+%header
+  .navbar.navbar-fixed-top
+    .container
+      %nav
+        %ul
+          .nav.navbar-nav.navbar-right
+            - if current_user   
+              %li
+                = link_to "Hello, #{current_user.name.capitalize}!", edit_user_registration_path(current_user)   
+              %li
+                = link_to "My Lists", lists_path  
+              %li
+                = link_to "New List", new_list_path 
+              %li
+                = link_to "Sign out", destroy_user_session_path, method: :delete
+            - else
+              %li
+                = link_to "Sign in", new_user_session_path
+              %li
+                = link_to "Sign Up", new_user_registration_path
+
+
