@@ -17,6 +17,7 @@ gem 'pundit'
 gem 'redcarpet'
 gem 'haml'
 gem 'friendly_id', '~> 5.1.0'
+gem 'active_model_serializers', '0.9.2'
 
 group :production do
    gem 'rails_12factor'

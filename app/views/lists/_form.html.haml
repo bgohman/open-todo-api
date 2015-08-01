@@ -1,0 +1,15 @@
+= form_for [list] do |f|
+  - if list.errors.any?
+    .alert.alert-danger
+      %h4 
+        There are
+        = pluralize(list.errors.count, "error")
+      %ul
+        - list.errors.full_messages.each do |msg|
+          %li
+            = msg
+  = f.label :list_name
+  = f.text_field :title, autofocus: true, class: 'form-control', placeholder: "list name"
+  %br
+  .form-group
+    = f.submit "Save", class: 'btn btn-success'
