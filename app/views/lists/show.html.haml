@@ -10,14 +10,27 @@
       = link_to "Delete List", @list, method: :delete, data: { confirm: 'Delete this list for sure?' }
 
 
-.row  
-  %ul
-    - @items.each do |item|
-      %li
-        = item.body
-        - if policy(item).edit?
-          = link_to "Edit", edit_list_item_path(@list, item)
-          = link_to "Delete", [@list, item], method: :delete, data: { confirm: 'Delete this topic for sure?' }
+.row
+  -# render @items
+  = form_tag completed_path, method: :put do
+    %ul  
+      - for item in @items  
+        - if !item.completed?
+          %li
+            = check_box_tag('item_ids[]', item.id)
+            = item.body
+    = submit_tag 'Mark checked items as complete'
+%br
+%h3 add a new item to the list
 .div
-  = render partial: 'items/form', locals: { list: @list, item: @item }          
+  = render partial: 'items/form', locals: { list: @list, item: @item }
+.div
+  %h2 completed items
+  - for item in @items
+    %p
+      - if item.completed?
+        .completed
+          = item.body
+        - if policy(item).destroy?
+          = link_to ": Delete", [item.list, item], method: :delete, data: { confirm: 'Delete this topic for sure?' }
 

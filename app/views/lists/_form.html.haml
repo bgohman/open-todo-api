@@ -10,6 +10,8 @@
             = msg
   = f.label :list_name
   = f.text_field :title, autofocus: true, class: 'form-control', placeholder: "list name"
+  = f.label :list_access
+  = f.text_field :permissions, class: 'form-control', placeholder: "select private, viewable, or open"
   %br
   .form-group
     = f.submit "Save", class: 'btn btn-success'

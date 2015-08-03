@@ -40,25 +40,34 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1
   # PATCH/PUT /items/1.json
   def update
-    respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @item }
-      else
-        format.html { render :edit }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
+    @list = List.friendly.find(params[:list_id])
+    if @item.update(item_params)
+      flash[:notice] = "item was updeated."
+      redirect_to @list
+    else
+      flash[:error] = "There was an error saving the item. Please try again."
+      render :new
     end
   end
 
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
+    @list = @item.list
     @item.destroy
     respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
+      format.html { redirect_to @list, notice: 'Item was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def completed
+    @items = Item.find(params[:item_ids])
+    @items.each do |item|
+      item.update_attributes(completed: true)
+    end
+    @list = @items.first.list
+    redirect_to @list
   end
 
   private
@@ -69,6 +78,6 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:body, :user)
+      params.require(:item).permit(:body, :user, :completed)
     end
 end

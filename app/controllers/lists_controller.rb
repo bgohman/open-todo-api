@@ -43,6 +43,7 @@ class ListsController < ApplicationController
   # PATCH/PUT /lists/1.json
   def update
     respond_to do |format|
+      authorize @list
       if @list.update(list_params)
         format.html { redirect_to @list, notice: 'List was successfully updated.' }
         format.json { render :show, status: :ok, location: @list }
@@ -71,6 +72,6 @@ class ListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.require(:list).permit(:title, :user)
+      params.require(:list).permit(:title, :user, :permissions)
     end
 end

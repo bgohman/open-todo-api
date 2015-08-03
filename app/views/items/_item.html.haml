@@ -1,0 +1,8 @@
+- if item.completed?
+  .completed
+    = item.body
+-else
+  = item.body
+- if policy(item).edit?
+  = link_to "Edit", edit_list_item_path(item.list, item)
+  = link_to "Delete", [item.list, item], method: :delete, data: { confirm: 'Delete this topic for sure?' }
