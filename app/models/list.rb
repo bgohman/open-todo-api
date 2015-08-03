@@ -1,6 +1,7 @@
 class List < ActiveRecord::Base
   belongs_to :user
   has_many :items, dependent: :destroy
+  validates :title, presence: true
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
