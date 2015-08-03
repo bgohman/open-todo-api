@@ -1,6 +1,11 @@
 class Api::ItemsController < ApiController
   before_action :authenticated?
 
+  def index
+    items = Item.all
+    render json: items, each_serializer: UserSerializer
+  end
+
   def create
     list = List.friendly.find(params[:list_id])
     item = Item.new(item_params)
