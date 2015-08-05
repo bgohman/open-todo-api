@@ -1,2 +1,3 @@
 class ItemPolicy < ApplicationPolicy
+
 end

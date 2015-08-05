@@ -4,6 +4,7 @@ class Api::ListsController < ApiController
 
   def index
     lists = List.all
+    authorize lists
     render json: lists, each_serializer: UserSerializer
   end
 

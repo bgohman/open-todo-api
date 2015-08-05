@@ -4,7 +4,8 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.all
+    @lists = current_user.lists
+    authorize @lists
   end
 
   # GET /lists/1
@@ -12,6 +13,7 @@ class ListsController < ApplicationController
   def show
     @items = @list.items.all
     @item = Item.new
+    authorize @list
   end
 
   # GET /lists/new
